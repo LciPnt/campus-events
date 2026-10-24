@@ -1,13 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { EventCard } from '../components/EventCard';
+import { initialEvents } from '../data/events';
 
 export default function Page() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Події коледжу</Text>
-      <Text style={styles.description}>
-        Слідкуйте за найсвіжішими заходами, лекціями та подіями нашого навчального закладу.
-      </Text>
-      <Text style={styles.subtitle}>Список подій з’явиться тут</Text>
+      <Text style={styles.headerTitle}>Події коледжу</Text>
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        {initialEvents.map((event) => (
+          <EventCard key={event.id} event={event} />
+        ))}
+      </ScrollView>
     </View>
   );
 }
@@ -15,29 +22,19 @@ export default function Page() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#f7fafc',
+    paddingTop: 50,
   },
-  title: {
-    fontSize: 28,
+  headerTitle: {
+    fontSize: 26,
     fontWeight: 'bold',
-    color: '#1a1a1a',
-    marginBottom: 12,
+    color: '#1a202c',
     textAlign: 'center',
+    marginBottom: 16,
+    paddingHorizontal: 16,
   },
-  description: {
-    fontSize: 16,
-    color: '#4a5568',
-    textAlign: 'center',
-    marginBottom: 24,
-    lineHeight: 22,
-  },
-  subtitle: {
-    fontSize: 14,
-    fontStyle: 'italic',
-    color: '#718096',
-    textAlign: 'center',
+  scrollContent: {
+    paddingHorizontal: 16,
+    paddingBottom: 24,
   },
 });
