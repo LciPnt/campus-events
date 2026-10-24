@@ -1,13 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { EventItem } from '../types/event';
 
 type EventCardProps = {
   event: EventItem;
-  onOpen?: () => void;
+  isFavorite: boolean;
+  onToggleFavorite: () => void;
 };
 
-export function EventCard({ event }: EventCardProps) {
+export function EventCard({ event, isFavorite, onToggleFavorite }: EventCardProps) {
   return (
     <View style={styles.card}>
       <View style={styles.header}>
@@ -16,6 +17,21 @@ export function EventCard({ event }: EventCardProps) {
       </View>
       <Text style={styles.info}>📅 {event.date}  •  📍 {event.place}</Text>
       <Text style={styles.description}>{event.description}</Text>
+
+      <Pressable
+        style={[styles.favoriteButton, isFavorite && styles.favoriteButtonActive]}
+        onPress={onToggleFavorite}
+        accessibilityRole="button"
+        accessibilityLabel={
+          isFavorite
+            ? `Видалити ${event.title} з обраного`
+            : `Додати ${event.title} до обраного`
+        }
+      >
+        <Text style={[styles.favoriteButtonText, isFavorite && styles.favoriteButtonTextActive]}>
+          {isFavorite ? 'Прибрати з обраного' : 'В обране'}
+        </Text>
+      </Pressable>
     </View>
   );
 }
@@ -67,5 +83,27 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#718096',
     lineHeight: 20,
+    marginBottom: 12,
+  },
+  favoriteButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#3182ce',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+  },
+  favoriteButtonActive: {
+    backgroundColor: '#e53e3e',
+    borderColor: '#e53e3e',
+  },
+  favoriteButtonText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#3182ce',
+  },
+  favoriteButtonTextActive: {
+    color: '#ffffff',
   },
 });
