@@ -17,15 +17,16 @@ export function EventCard({ event, isFavorite, onToggleFavorite }: EventCardProp
       </View>
       <Text style={styles.info}>📅 {event.date}  •  📍 {event.place}</Text>
       <Text style={styles.description}>{event.description}</Text>
-
       <Pressable
-        style={[styles.favoriteButton, isFavorite && styles.favoriteButtonActive]}
+        style={({ pressed }) => [
+          styles.favoriteButton,
+          isFavorite && styles.favoriteButtonActive,
+          pressed && styles.pressed,
+        ]}
         onPress={onToggleFavorite}
         accessibilityRole="button"
         accessibilityLabel={
-          isFavorite
-            ? `Видалити ${event.title} з обраного`
-            : `Додати ${event.title} до обраного`
+          isFavorite ? `Видалити ${event.title} з обраного` : `Додати ${event.title} до обраного`
         }
       >
         <Text style={[styles.favoriteButtonText, isFavorite && styles.favoriteButtonTextActive]}>
@@ -53,16 +54,10 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: 8,
   },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1a202c',
-    flex: 1,
-    marginRight: 8,
-  },
+  title: { fontSize: 18, fontWeight: 'bold', color: '#1a202c', flex: 1, flexShrink: 1, marginRight: 8 },
   category: {
     fontSize: 12,
     fontWeight: '600',
@@ -72,19 +67,10 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 6,
     overflow: 'hidden',
+    flexShrink: 0,
   },
-  info: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#4a5568',
-    marginBottom: 8,
-  },
-  description: {
-    fontSize: 14,
-    color: '#718096',
-    lineHeight: 20,
-    marginBottom: 12,
-  },
+  info: { fontSize: 14, fontWeight: '500', color: '#4a5568', marginBottom: 8 },
+  description: { fontSize: 14, color: '#4a5568', lineHeight: 20, marginBottom: 12 },
   favoriteButton: {
     paddingVertical: 8,
     paddingHorizontal: 12,
@@ -94,16 +80,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#ffffff',
   },
-  favoriteButtonActive: {
-    backgroundColor: '#e53e3e',
-    borderColor: '#e53e3e',
-  },
-  favoriteButtonText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#3182ce',
-  },
-  favoriteButtonTextActive: {
-    color: '#ffffff',
-  },
+  favoriteButtonActive: { backgroundColor: '#e53e3e', borderColor: '#e53e3e' },
+  favoriteButtonText: { fontSize: 14, fontWeight: '600', color: '#3182ce' },
+  favoriteButtonTextActive: { color: '#ffffff' },
+  pressed: { opacity: 0.8 },
 });

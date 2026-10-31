@@ -6,3 +6,4 @@ export type EventItem = {
   category: 'Навчання' | 'Культура' | 'Спорт';
   description: string;
 };
+
